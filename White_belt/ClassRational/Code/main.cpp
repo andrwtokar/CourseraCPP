@@ -133,62 +133,8 @@ bool operator< (const Rational& lhs, const Rational& rhs) {
         }
     }
 }
-/*bool operator> (const Rational& lhs, const Rational& rhs) {
-    Rational result = lhs/rhs;
-    return (result.Numerator()/result.Denominator() > 1);
-}
-bool operator!= (const Rational& lhs, const Rational& rhs) {
-    return !(lhs == rhs);
-}
-bool operator<= (const Rational& lhs, const Rational& rhs) {
-    Rational result = lhs/rhs;
-    return (result.Numerator()/result.Denominator() <= 1);
-}
-bool operator>= (const Rational& lhs, const Rational& rhs) {
-    Rational result = lhs/rhs;
-    return (result.Numerator()/result.Denominator() >= 1);
-}*/
 
 int main() {
-    {
-        const set<Rational> rs = {{1, 2}, {1, 25}, {3, 4}, {3, 4}, {1, 2}};
-        if (rs.size() != 3) {
-            cout << "Wrong amount of items in the set" << endl << "Size: " << rs.size() << endl;
-            for (auto i: rs) {
-                cout << i << endl;
-            }
-
-            return 1;
-        }
-
-        for (auto i: rs) {
-            cout << "else" << i << endl;
-        }
-
-        vector<Rational> v;
-        for (auto x : rs) {
-            v.push_back(x);
-        }
-        if (v != vector<Rational>{{1, 25}, {1, 2}, {3, 4}}) {
-            cout << "Rationals comparison works incorrectly" << endl;
-            return 2;
-        }
-    }
-
-    {
-        map<Rational, int> count;
-        ++count[{1, 2}];
-        ++count[{1, 2}];
-
-        ++count[{2, 3}];
-
-        if (count.size() != 2) {
-            cout << "Wrong amount of items in the map" << endl;
-            return 3;
-        }
-    }
-
-    cout << "OK" << endl;
     return 0;
 }
 
