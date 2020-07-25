@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/tokar/GitHub/CourseraCPP/White_belt/ClassRational/Code/main.cpp
+iostream
+-
+sstream
+-
+set
+-
+map
+-
+vector
+-
+exception
+-
+
