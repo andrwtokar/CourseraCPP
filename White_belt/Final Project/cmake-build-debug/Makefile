@@ -47,10 +47,10 @@ RM = "C:\Program Files\JetBrains\CLion 2019.3.4\bin\cmake\win\bin\cmake.exe" -E 
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "C:\Users\tokar\CLionProjects\Coursera\White_belt\Final Project"
+CMAKE_SOURCE_DIR = "C:\Users\tokar\GitHub\CourseraCPP\White_belt\Final Project"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "C:\Users\tokar\CLionProjects\Coursera\White_belt\Final Project\cmake-build-debug"
+CMAKE_BINARY_DIR = "C:\Users\tokar\GitHub\CourseraCPP\White_belt\Final Project\cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\tokar\CLionProjects\Coursera\White_belt\Final Project\cmake-build-debug\CMakeFiles" "C:\Users\tokar\CLionProjects\Coursera\White_belt\Final Project\cmake-build-debug\CMakeFiles\progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\tokar\GitHub\CourseraCPP\White_belt\Final Project\cmake-build-debug\CMakeFiles" "C:\Users\tokar\GitHub\CourseraCPP\White_belt\Final Project\cmake-build-debug\CMakeFiles\progress.marks"
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\tokar\CLionProjects\Coursera\White_belt\Final Project\cmake-build-debug\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "C:\Users\tokar\GitHub\CourseraCPP\White_belt\Final Project\cmake-build-debug\CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,33 @@ Final_Project/fast:
 	$(MAKE) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/build
 .PHONY : Final_Project/fast
 
+Tests.obj: Tests.cpp.obj
+
+.PHONY : Tests.obj
+
+# target to build an object file
+Tests.cpp.obj:
+	$(MAKE) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Tests.cpp.obj
+.PHONY : Tests.cpp.obj
+
+Tests.i: Tests.cpp.i
+
+.PHONY : Tests.i
+
+# target to preprocess a source file
+Tests.cpp.i:
+	$(MAKE) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Tests.cpp.i
+.PHONY : Tests.cpp.i
+
+Tests.s: Tests.cpp.s
+
+.PHONY : Tests.s
+
+# target to generate assembly for a file
+Tests.cpp.s:
+	$(MAKE) -f CMakeFiles\Final_Project.dir\build.make CMakeFiles/Final_Project.dir/Tests.cpp.s
+.PHONY : Tests.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -158,6 +185,9 @@ help:
 	@echo ... rebuild_cache
 	@echo ... Final_Project
 	@echo ... edit_cache
+	@echo ... Tests.obj
+	@echo ... Tests.i
+	@echo ... Tests.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
