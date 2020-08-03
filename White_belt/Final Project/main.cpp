@@ -16,20 +16,21 @@ using namespace std;
  *      - проверка формата даты                                         +
  *      - проверка месяца                                               +
  *      - проверка дня                                                  +
- *  4. Проверку команды на верность;                                            +-
- *  5. Реализовать весь функционал:                                             +-
+ *  4. Проверку команды на верность;                                            +
+ *  5. Реализовать весь функционал:                                             +
  *      - добавление события:                        Add Дата Событие   +
  *      - удаление события:                          Del Дата Событие   +
  *      - удаление всех событий за конкретную дату:  Del Дата           +
- *      - поиск событий за конкретную дату:          Find Дата          -
- *      - печать всех событий за все даты:           Print              -
- *  6. Пройти готовые тесты от Coursera;                                        -
+ *      - поиск событий за конкретную дату:          Find Дата          +
+ *      - печать всех событий за все даты:           Print              +
+ *  6. Пройти готовые тесты от Coursera;                                        +
  *  7. Написать "документацию".                                                 +-
+ *  8. Написать собственные тесты                                               -
  */
 
 
 /*
- * Необходимые для обработки даты функции.
+ * Функции, необходимые для обработки даты.
  */
 void CheckNextSymbol (stringstream& s) {
     /*
@@ -78,6 +79,10 @@ public:
         day = new_day;
     }
     Date (const string& input)  {
+        /*
+         * Конструктор, который из входного слова выделяют дату
+         * и бросает исключения в необходимых ситуациях.
+         */
         stringstream s(input);
         try {
             s >> year;
@@ -136,6 +141,9 @@ private:
     }
 };
 
+/*
+ * Перегруженные операторы для класса Date.
+ */
 bool operator<(const Date& lhs, const Date& rhs) {
     if (lhs.GetYear() != rhs.GetYear()) {
         return lhs.GetYear() < rhs.GetYear();
@@ -161,9 +169,17 @@ ostream& operator<< (ostream& output, const Date& out) {
 class Database {
 public:
     void AddEvent(const Date& date, const string& event) {
+        /*
+         * Добавлет событие event по дате date в базу данных.
+         */
         Base[date].insert(event);
     }
     bool DeleteEvent(const Date& date, const string& event) {
+        /*
+         * Удаляет событие event за дату date и возвращает:
+         *      true - если получилось найти событие и удалить,
+         *      false - в ином случае.
+         */
         if (Base.count(date) > 0) {
             auto it = Base[date].find(event);
             if (it != Base[date].end()) {
@@ -174,6 +190,9 @@ public:
         return false;
     }
     int  DeleteDate(const Date& date) {
+        /*
+         * Удаляет все события за дату date и возвращает количество удаленных событий.
+         */
         if (Base.count(date) > 0) {
             int result = Base[date].size();
             Base[date].clear();
@@ -183,6 +202,10 @@ public:
         return 0;
     }
     void Find(const Date& date) const {
+        /*
+         * Ищет и выводит все собития за дату date в stdout.
+         * Каждое новое событие на новой строчке.
+         */
         if (Base.count(date) > 0) {
             for (const string& i: Base.at(date)) {
                 cout << i << endl;
@@ -190,6 +213,14 @@ public:
         }
     }
     void Print() const {
+        /*
+         * Выводит всю базу данных в виде:
+         *      date event
+         * При нескольких собитях вв одну дату - выводит несколько пар на разных строчках:
+         *      date event1
+         *      date event2
+         *          ...
+         */
         for (const auto& i: Base) {
             for (const string& j: i.second) {
                 cout << i.first << " " << j << endl;
@@ -202,6 +233,9 @@ private:
 };
 
 vector<string> SplitInputString (const string& input) {
+    /*
+     * Разбивает входную строку на слова.
+     */
     vector<string> result;
     stringstream ss(input);
 
@@ -248,6 +282,7 @@ int main() {
 
     return 0;
 }
+
 /*
  * Test 1
     Add 0-1-2 event1
