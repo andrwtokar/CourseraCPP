@@ -45,7 +45,6 @@ void CheckNextSymbol (stringstream& s) {
         }
     }
 }
-
 int NegativeCheck (stringstream& s) {
     /*
      * Проверяет, что после возможных знаков числа у нас будет цифра.
@@ -117,12 +116,9 @@ public:
     int GetDay() const {
         return day;
     }
-
-    /*
-     * Подумать над GetDate(), в каком формате и PrintDate(), тоже над форматом.
-     * Также возможно добавление других функций, которые в данный момент не видны необходимыми.
-     */
-
+    Date GetDate() const {
+        return Date(year, month, day);
+    }
 private:
     int year;
     int month;
@@ -196,14 +192,10 @@ public:
     void Print() const {
         for (const auto& i: Base) {
             for (const string& j: i.second) {
-                cout << i.first << j << endl;
+                cout << i.first << " " << j << endl;
             }
         }
     }
-
-    /*
-    * Добавить выводы по каждой функции/возможности меню, также проверки на неверности и выбросы исключений.
-    */
 
 private:
     map <Date, set<string>> Base;
@@ -222,7 +214,6 @@ vector<string> SplitInputString (const string& input) {
     return result;
 }
 
-
 int main() {
     Database db;
 
@@ -237,7 +228,7 @@ int main() {
             db.AddEvent(Date(InputStrings[1]), InputStrings[2]);
         } else if (InputStrings[0] == "Del") {
             if (InputStrings.size() == 2) {
-                db.DeleteDate(Date(InputStrings[1]));
+                cout << "Deleted " << db.DeleteDate(Date(InputStrings[1])) << " events\n";
             } else {
                 if (db.DeleteEvent(Date(InputStrings[1]), InputStrings[2])) {
                     cout << "Deleted successfully\n";
@@ -257,3 +248,18 @@ int main() {
 
     return 0;
 }
+/*
+ * Test 1
+    Add 0-1-2 event1
+    Add 1-2-3 event2
+    Find 0-1-2
+
+    Del 0-1-2
+    Print
+    Del 1-2-3 event2
+    Del 1-2-3 event2
+
+ * Test 2
+   Add 0-13-32 event1
+
+ */
