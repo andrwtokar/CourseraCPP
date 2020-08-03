@@ -80,9 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/tokar/GitHub/CourseraCPP/White_belt/Final Project/Tests.cpp">
-			<Option target="Final_Project"/>
-		</Unit>
 		<Unit filename="C:/Users/tokar/GitHub/CourseraCPP/White_belt/Final Project/main.cpp">
 			<Option target="Final_Project"/>
 		</Unit>

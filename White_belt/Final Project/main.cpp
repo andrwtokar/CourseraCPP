@@ -2,25 +2,27 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <set>
 #include <sstream>
 #include <exception>
+#include <iomanip>
 
 using namespace std;
 
 /**
  *  1. Реализовать разбор строки, после принятия через getline();               +
- *  2. Проверку строки на пустоту;                                              +
- *  3. Проверку даты на верность;                                               +-
+ *  2. Игнорирование пустой строки;                                             +
+ *  3. Проверку даты на верность;                                               +
  *      - проверка формата даты                                         +
  *      - проверка месяца                                               +
  *      - проверка дня                                                  +
  *  4. Проверку команды на верность;                                            +-
- *  5. Реализовать весь функционал:                                             -
- *      - добавление события:                        Add Дата Событие   -
-        - удаление события:                          Del Дата Событие   -
-        - удаление всех событий за конкретную дату:  Del Дата           -
-        - поиск событий за конкретную дату:          Find Дата          -
-        - печать всех событий за все даты:           Print              -
+ *  5. Реализовать весь функционал:                                             +-
+ *      - добавление события:                        Add Дата Событие   +
+ *      - удаление события:                          Del Дата Событие   +
+ *      - удаление всех событий за конкретную дату:  Del Дата           +
+ *      - поиск событий за конкретную дату:          Find Дата          -
+ *      - печать всех событий за все даты:           Print              -
  *  6. Пройти готовые тесты от Coursera;                                        -
  *  7. Написать "документацию".                                                 +-
  */
@@ -147,37 +149,64 @@ bool operator<(const Date& lhs, const Date& rhs) {
         return lhs.GetDay() < rhs.GetDay();
     }
 }
-
 bool operator==(const Date& lhs, const Date& rhs) {
     return ((lhs.GetYear() == rhs.GetYear()) && (lhs.GetMonth() == rhs.GetMonth()) && (lhs.GetDay() == rhs.GetDay()));
+}
+bool operator!=(const Date& lhs, const Date& rhs) {
+    return !(lhs == rhs);
+}
+ostream& operator<< (ostream& output, const Date& out) {
+    output << setw(4) << setfill('0') << out.GetYear() << '-'
+           << setw(2) << setfill('0') << out.GetMonth() << '-'
+           << setw(2) << setfill('0') << out.GetDay();
+    return output;
 }
 
 class Database {
 public:
-      void AddEvent(const Date& date, const string& event) {
+    void AddEvent(const Date& date, const string& event) {
+        Base[date].insert(event);
+    }
+    bool DeleteEvent(const Date& date, const string& event) {
+        if (Base.count(date) > 0) {
+            auto it = Base[date].find(event);
+            if (it != Base[date].end()) {
+                Base[date].erase(it);
+                return true;
+            }
+        }
+        return false;
+    }
+    int  DeleteDate(const Date& date) {
+        if (Base.count(date) > 0) {
+            int result = Base[date].size();
+            Base[date].clear();
+            Base.erase(date);
+            return result;
+        }
+        return 0;
+    }
+    void Find(const Date& date) const {
+        if (Base.count(date) > 0) {
+            for (const string& i: Base.at(date)) {
+                cout << i << endl;
+            }
+        }
+    }
+    void Print() const {
+        for (const auto& i: Base) {
+            for (const string& j: i.second) {
+                cout << i.first << j << endl;
+            }
+        }
+    }
 
-      }
-      bool DeleteEvent(const Date& date, const string& event) {
-
-      }
-      int  DeleteDate(const Date& date) {
-
-      }
-
-      Database/*над этим ещё надо подумать*/ Find(const Date& date) const {
-
-      }
-
-      void Print() const {
-
-      }
-
-      /*
-       * Добавить выводы по каждой функции/возможности меню, также проверки на неверности и выбросы исключений.
-       */
+    /*
+    * Добавить выводы по каждой функции/возможности меню, также проверки на неверности и выбросы исключений.
+    */
 
 private:
-    map <Date, vector <string>> Base;
+    map <Date, set<string>> Base;
 };
 
 vector<string> SplitInputString (const string& input) {
@@ -195,30 +224,36 @@ vector<string> SplitInputString (const string& input) {
 
 
 int main() {
-      Database db;
+    Database db;
 
-      string input;
-      while (getline(cin, input)) {
-          if (input.empty()) {
-              continue;
-          }
-          vector <string> InputStrings = SplitInputString(input);
-          if (InputStrings[0] == "Add") {
+    string input;
+    while (getline(cin, input)) {
+        if (input.empty()) {
+            continue;
+        }
+        vector <string> InputStrings = SplitInputString(input);
 
-          } else if (InputStrings[0] == "Del") {
+        if (InputStrings[0] == "Add") {
+            db.AddEvent(Date(InputStrings[1]), InputStrings[2]);
+        } else if (InputStrings[0] == "Del") {
+            if (InputStrings.size() == 2) {
+                db.DeleteDate(Date(InputStrings[1]));
+            } else {
+                if (db.DeleteEvent(Date(InputStrings[1]), InputStrings[2])) {
+                    cout << "Deleted successfully\n";
+                } else {
+                    cout << "Event not found\n";
+                }
+            }
+        } else if (InputStrings[0] == "Find") {
+            db.Find(Date(InputStrings[1]));
+        } else if (InputStrings[0] == "Print") {
+            db.Print();
+        } else {
+            string exc = "Unknown command: " + InputStrings[0];
+            throw runtime_error(exc);
+        }
+    }
 
-          } else if (InputStrings[0] == "Find") {
-
-          } else if (InputStrings[0] == "Print") {
-
-          } else {
-              string exc = "Unknown command: " + InputStrings[0];
-              throw runtime_error(exc);
-              //throw exception;
-          }
-        // Считайте команды с потока ввода и обработайте каждую
-        //Также придумать способ пропускать пустые строки
-      }
-
-      return 0;
+    return 0;
 }
