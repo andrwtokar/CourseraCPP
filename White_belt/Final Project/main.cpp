@@ -117,7 +117,7 @@ public:
         return day;
     }
     Date GetDate() const {
-        return Date(year, month, day);
+        return (Date(year, month, day));
     }
 private:
     int year;

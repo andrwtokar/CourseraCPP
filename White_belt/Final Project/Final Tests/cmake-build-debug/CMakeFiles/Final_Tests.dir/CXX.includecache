@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/tokar/CLionProjects/Coursera/White_belt/Final Tests/main.cpp
+iostream
+-
+string
+-
+map
+-
+vector
+-
+set
+-
+sstream
+-
+exception
+-
+

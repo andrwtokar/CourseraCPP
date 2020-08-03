@@ -1,0 +1,3 @@
+C:/Users/tokar/CLionProjects/Coursera/White_belt/Final Tests/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/tokar/CLionProjects/Coursera/White_belt/Final Tests/cmake-build-debug/CMakeFiles/Final_Tests.dir
+C:/Users/tokar/CLionProjects/Coursera/White_belt/Final Tests/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/tokar/GitHub/CourseraCPP/White_belt/Final Project/main.cpp
+iostream
+-
+string
+-
+map
+-
+vector
+-
+set
+-
+sstream
+-
+exception
+-
+iomanip
+-
+
