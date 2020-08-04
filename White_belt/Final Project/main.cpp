@@ -3,7 +3,6 @@
 #include <map>
 #include <vector>
 #include <set>
-#include <sstream>
 #include <exception>
 #include <iomanip>
 
@@ -25,46 +24,12 @@ using namespace std;
  *      - печать всех событий за все даты:           Print              +
  *  6. Пройти готовые тесты от Coursera;                                        +
  *  7. Написать "документацию".                                                 +-
- *  8. Написать собственные тесты                                               -
  */
 
 
 /*
  * Функции, необходимые для обработки даты.
  */
-char* IntToStr(int n)
-{
-    char s[40], t, *temp;
-    int i, k;
-    int sign = 0;
-    i = 0;
-    k = n;
-    if (k<0)
-    {
-        sign = 1;
-        k = -k;
-    }
-    do {
-        t = k % 10;
-        k = k / 10;
-        s[i] = t | 0x30;
-        i++;
-    } while (k>0);
-    if (sign == 1)
-    {
-        s[i] = '-';
-        i++;
-    }
-    temp = new char[i];
-    k = 0;
-    i--;
-    while (i >= 0) {
-        temp[k] = s[i];
-        i--; k++;
-    }
-    temp[k] = '\0';
-    return(temp);
-}
 void CheckNextSymbol (stringstream& s) {
     /*
      * Проверяет, что разделитель между частями даты '-' и что следующий символ не бессмысленный.
