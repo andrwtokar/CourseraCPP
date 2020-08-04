@@ -32,6 +32,39 @@ using namespace std;
 /*
  * Функции, необходимые для обработки даты.
  */
+char* IntToStr(int n)
+{
+    char s[40], t, *temp;
+    int i, k;
+    int sign = 0;
+    i = 0;
+    k = n;
+    if (k<0)
+    {
+        sign = 1;
+        k = -k;
+    }
+    do {
+        t = k % 10;
+        k = k / 10;
+        s[i] = t | 0x30;
+        i++;
+    } while (k>0);
+    if (sign == 1)
+    {
+        s[i] = '-';
+        i++;
+    }
+    temp = new char[i];
+    k = 0;
+    i--;
+    while (i >= 0) {
+        temp[k] = s[i];
+        i--; k++;
+    }
+    temp[k] = '\0';
+    return(temp);
+}
 void CheckNextSymbol (stringstream& s) {
     /*
      * Проверяет, что разделитель между частями даты '-' и что следующий символ не бессмысленный.
@@ -55,15 +88,24 @@ int NegativeCheck (stringstream& s) {
         result = -1;
         s.ignore(1);
         if (!((s.peek() >= 48) && (s.peek() <= 57))) {
-            throw exception();
+            throw runtime_error("Wrong date format: ");
         }
     } else if (s.peek() == '+') {
         s.ignore(1);
         if (!((s.peek() >= 48) && (s.peek() <= 57))) {
-            throw exception();
+            throw runtime_error("Wrong date format: ");
         }
     }
     return result;
+}
+void CheckEndOfStream (stringstream& s) {
+    /*
+     * Проверяет, конец входной строки.
+     * Fixed bug with input: Add 1-1-1d event.
+     */
+    if (s.peek() != EOF) {
+        throw runtime_error("Wrong date format: ");
+    }
 }
 
 class Date {
@@ -98,19 +140,13 @@ public:
             int new_day = 0;
             s >> new_day;
             day = NumberSign*new_day;
+            CheckEndOfStream(s);
         } catch (exception& ex) {
-            cout << "Wrong date format: " << input << endl;
-            exit(0);
+            throw runtime_error("Wrong date format: " + input);
         }
 
-        try {
-            CheckMonth();
-            CheckDay();
-        } catch (exception& ex) {
-            cout << ex.what() << endl;
-            exit(0);
-        }
-
+        CheckMonth();
+        CheckDay();
     }
     int GetYear() const {
         return year;
@@ -251,33 +287,38 @@ vector<string> SplitInputString (const string& input) {
 int main() {
     Database db;
 
-    string input;
-    while (getline(cin, input)) {
-        if (input.empty()) {
-            continue;
-        }
-        vector <string> InputStrings = SplitInputString(input);
-
-        if (InputStrings[0] == "Add") {
-            db.AddEvent(Date(InputStrings[1]), InputStrings[2]);
-        } else if (InputStrings[0] == "Del") {
-            if (InputStrings.size() == 2) {
-                cout << "Deleted " << db.DeleteDate(Date(InputStrings[1])) << " events\n";
-            } else {
-                if (db.DeleteEvent(Date(InputStrings[1]), InputStrings[2])) {
-                    cout << "Deleted successfully\n";
-                } else {
-                    cout << "Event not found\n";
-                }
+    try {
+        string input;
+        while (getline(cin, input)) {
+            if (input.empty()) {
+                continue;
             }
-        } else if (InputStrings[0] == "Find") {
-            db.Find(Date(InputStrings[1]));
-        } else if (InputStrings[0] == "Print") {
-            db.Print();
-        } else {
-            string exc = "Unknown command: " + InputStrings[0];
-            throw runtime_error(exc);
+            vector <string> InputStrings = SplitInputString(input);
+
+            if (InputStrings[0] == "Add") {
+                db.AddEvent(Date(InputStrings[1]), InputStrings[2]);
+            } else if (InputStrings[0] == "Del") {
+                if (InputStrings.size() == 2) {
+                    Date now = Date(InputStrings[1]);
+                    cout << "Deleted " << db.DeleteDate(now) << " events\n";
+                } else {
+                    if (db.DeleteEvent(Date(InputStrings[1]), InputStrings[2])) {
+                        cout << "Deleted successfully\n";
+                    } else {
+                        cout << "Event not found\n";
+                    }
+                }
+            } else if (InputStrings[0] == "Find") {
+                db.Find(Date(InputStrings[1]));
+            } else if (InputStrings[0] == "Print") {
+                db.Print();
+            } else {
+                string exc = "Unknown command: " + InputStrings[0];
+                throw runtime_error(exc);
+            }
         }
+    } catch (exception& ex) {
+        cout << ex.what() << endl;
     }
 
     return 0;
