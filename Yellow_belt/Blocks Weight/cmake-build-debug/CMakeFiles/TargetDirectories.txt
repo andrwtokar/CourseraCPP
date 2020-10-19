@@ -1,0 +1,3 @@
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Blocks Weight/cmake-build-debug/CMakeFiles/Blocks_Weight.dir
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Blocks Weight/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Blocks Weight/cmake-build-debug/CMakeFiles/rebuild_cache.dir
