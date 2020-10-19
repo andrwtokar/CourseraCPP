@@ -1,0 +1,3 @@
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Summation of matrices/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Summation of matrices/cmake-build-debug/CMakeFiles/Summation_of_matrices.dir
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Summation of matrices/cmake-build-debug/CMakeFiles/edit_cache.dir
