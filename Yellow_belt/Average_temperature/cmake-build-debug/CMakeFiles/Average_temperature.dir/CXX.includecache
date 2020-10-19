@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/tokar/GitHub/CourseraCPP/Yellow_belt/Average_temperature/main.cpp
+iostream
+-
+vector
+-
+cstdint
+-
+
